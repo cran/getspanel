@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>getspanel: Getting Started</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+<style type="text/css">
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">getspanel: Getting Started</h1>
+
+
+
+<p>The <code>getspanel</code> package can be downloaded and installed
+from <a href="https://github.com/moritzpschwarz/getspanel">GitHub</a>.</p>
+<p>The package can be installed using:</p>
+<pre><code># install.packages(&quot;devtools&quot;)
+devtools::install_github(&quot;moritzpschwarz/getspanel&quot;)</code></pre>
+<p>Once installed we need to load the library:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(getspanel)</span></code></pre></div>
+<p>Currently the package is called <strong>getspanel</strong> to align
+with the <strong>gets</strong> package, but it’s main function of course
+remains the <strong>isatpanel</strong> function.</p>
+<p><strong>A quick overview over what has changed:</strong></p>
+<ul>
+<li><p>We can now use the function approach as well as the traditional
+gets approach. This means that we can specify a model using
+<code>y</code> and <code>mxreg</code> as well as <code>time</code> and
+<code>id</code> as vectors, but we can now also simply supply a
+<code>data.frame</code> and a <code>function</code> in the form
+<code>y ~ x + z + I(x^2)</code> to e.g. specify polynomials. This means
+we will then need an <code>index</code> argument, which specifies
+the</p></li>
+<li><p>The <code>ar</code> argument now works</p></li>
+<li><p>We can now use the <code>fixest</code> package to speed up model
+estimation with large <code>i</code> (for short panels, the default
+method is still faster).The package can be activated using the new
+<code>engine</code> argument.</p></li>
+<li><p>Using the <code>fixest</code> package also allows us to calculate
+<strong>clustered standard errors</strong>.</p></li>
+<li><p>We can now be certain that unbalanced panels would work as
+intended, which was not the case before.</p></li>
+<li><p>The <code>mxbreak</code> and <code>break.method</code> arguments
+have been removed. Instead the function now produces the break matrix
+itself. This now implements the following saturation methods in a user
+friendly way:</p></li>
+<li><p><strong>iis</strong>: Impulse Indicator Saturation</p></li>
+<li><p><strong>jsis</strong>: <strong>Joint</strong> Step Indicator
+Saturation (Common Breaks over time)</p></li>
+<li><p><strong>csis</strong>: <strong>Coefficient</strong> Step
+Indicator Saturation (Common Coefficient Breaks over time)</p></li>
+<li><p><strong>fesis</strong>: <strong>Fixed Effect</strong> Step
+Indicator Saturation (Breaks in the Group Fixed Effect over
+time)</p></li>
+<li><p><strong>cfesis</strong>: <strong>Coefficient Fixed
+Effect</strong> Step Indicator Saturation (Breaks in the coefficient for
+each individual)</p></li>
+</ul>
+<div id="the-isatpanel-function" class="section level1">
+<h1>The isatpanel function</h1>
+<p>We first load some data of EU CO2 Emissions in the housing
+sector.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;EUCO2residential&quot;</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(EUCO2residential)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># A tibble: 6 × 9</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  country  year  lgdp  lhdd  lcdd urban av.rate     pop agg.directem</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="sc">&lt;</span>chr<span class="sc">&gt;</span>   <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span>   <span class="er">&lt;</span>dbl<span class="sc">&gt;</span>   <span class="er">&lt;</span>dbl<span class="sc">&gt;</span>        <span class="er">&lt;</span>dbl<span class="sc">&gt;</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> Austria  <span class="dv">1969</span>  <span class="fl">25.6</span>    <span class="cn">NA</span>    <span class="cn">NA</span>  <span class="fl">65.2</span>      <span class="cn">NA</span>      <span class="cn">NA</span>           <span class="cn">NA</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> Austria  <span class="dv">1970</span>  <span class="fl">25.7</span>    <span class="cn">NA</span>    <span class="cn">NA</span>  <span class="fl">65.3</span>      <span class="cn">NA</span>      <span class="cn">NA</span>           <span class="cn">NA</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span> Austria  <span class="dv">1971</span>  <span class="fl">25.8</span>    <span class="cn">NA</span>    <span class="cn">NA</span>  <span class="fl">65.3</span>      <span class="cn">NA</span> <span class="dv">7500482</span>           <span class="cn">NA</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="dv">4</span> Austria  <span class="dv">1972</span>  <span class="fl">25.8</span>    <span class="cn">NA</span>    <span class="cn">NA</span>  <span class="fl">65.3</span>      <span class="cn">NA</span> <span class="dv">7544201</span>           <span class="cn">NA</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="dv">5</span> Austria  <span class="dv">1973</span>  <span class="fl">25.9</span>    <span class="cn">NA</span>    <span class="cn">NA</span>  <span class="fl">65.3</span>      <span class="cn">NA</span> <span class="dv">7586115</span>           <span class="cn">NA</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="dv">6</span> Austria  <span class="dv">1974</span>  <span class="fl">25.9</span>    <span class="cn">NA</span>    <span class="cn">NA</span>  <span class="fl">65.3</span>      <span class="cn">NA</span> <span class="dv">7599038</span>           <span class="cn">NA</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co"># let&#39;s subset this a little bit to speed this up</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>EUCO2residential <span class="ot">&lt;-</span> EUCO2residential[EUCO2residential<span class="sc">$</span>year <span class="sc">&gt;</span> <span class="dv">2000</span> <span class="sc">&amp;</span> </span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>                                       EUCO2residential<span class="sc">$</span>country <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;Germany&quot;</span>, <span class="st">&quot;Austria&quot;</span>,</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>                                                                       <span class="st">&quot;Belgium&quot;</span>, <span class="st">&quot;Italy&quot;</span>, </span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>                                                                       <span class="st">&quot;Sweden&quot;</span>, <span class="st">&quot;Denmark&quot;</span>),]</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="co"># and let&#39;s also turn off printing the intermediate output from isatpanel</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">print.searchoutput =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<p>Let’s look at how we input what we want to model. Each
+<code>isatpanel</code> command takes:</p>
+<div id="basics" class="section level2">
+<h2>Basics</h2>
+<ul>
+<li>A specification of the source data, the group and time variable and
+the group-time characteristics. This can be entered into the function in
+two ways:</li>
+</ul>
+<ol style="list-style-type: lower-roman">
+<li><p>In the <strong>gets</strong> package style i.e. using vectors and
+matrices to specify <code>y</code>, <code>mxreg</code>,
+<code>time</code> and <code>id</code></p></li>
+<li><p>But also in a form that resembles the <code>lm</code> and
+<code>plm</code> specification i.e. inputting a <code>data.frame</code>
+(or <code>matrix</code> or <code>tibble</code>), a <code>formula</code>
+argument as well as character vectors for <code>index</code> (in the
+form
+<code>c(&quot;group_variable_name&quot;, &quot;time_variable_name&quot;)</code>)</p></li>
+</ol>
+<ul>
+<li>A an argument for the Fixed Effect Specification using
+<code>effect</code>.</li>
+</ul>
+<p>This already means that the following two commands will give the same
+result:</p>
+<p>Using the new method</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>is_lm <span class="ot">&lt;-</span> <span class="fu">isatpanel</span>(<span class="at">data =</span> EUCO2residential,</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">formula =</span> lagg.directem_pc <span class="sc">~</span> lgdp, </span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">index =</span> <span class="fu">c</span>(<span class="st">&quot;country&quot;</span>,<span class="st">&quot;year&quot;</span>),</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>                   </span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>                   <span class="at">effect =</span> <span class="st">&quot;twoways&quot;</span>,</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>                   </span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>                   <span class="at">fesis =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>Error <span class="cf">in</span> <span class="fu">eval</span>(predvars, data, env)<span class="sc">:</span> object <span class="st">&#39;lagg.directem_pc&#39;</span> not found</span></code></pre></div>
+<p>Using the traditional method</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>is_gets <span class="ot">&lt;-</span> <span class="fu">isatpanel</span>(<span class="at">y =</span> EUCO2residential<span class="sc">$</span>lagg.directem_pc,</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>                     <span class="at">mxreg =</span> EUCO2residential<span class="sc">$</span>lgdp,</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>                     <span class="at">time =</span> EUCO2residential<span class="sc">$</span>year,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>                     <span class="at">id =</span> EUCO2residential<span class="sc">$</span>country,</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>                     <span class="at">effect =</span> <span class="st">&quot;twoways&quot;</span>,</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>                     <span class="at">fesis =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>Warning<span class="sc">:</span> Unknown or uninitialised column<span class="sc">:</span> <span class="st">`</span><span class="at">lagg.directem_pc</span><span class="st">`</span>.</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>Error <span class="cf">in</span> <span class="fu">data.frame</span>(id, time, y, mxreg)<span class="sc">:</span> arguments imply differing number of rows<span class="sc">:</span> <span class="dv">216</span>, <span class="dv">0</span></span></code></pre></div>
+<!-- Let's check if those yield the same outcome: -->
+<!-- ```{r} -->
+<!-- head(is_lm$isatpanel.result$mean.results) -->
+<!-- ``` -->
+<!-- ```{r} -->
+<!-- head(is_gets$isatpanel.result$mean.results) -->
+<!-- ``` -->
+<!-- Evidently these are identical.  -->
+<p>From here onwards, I will use the <code>lm</code> notation.</p>
+</div>
+<div id="plotting" class="section level2">
+<h2>Plotting</h2>
+<p>We can plot these simply using the default plotting methods (rely on
+the <strong>ggplot2</strong> package):</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(is_lm)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>Error <span class="cf">in</span> <span class="fu">plot</span>(is_lm)<span class="sc">:</span> object <span class="st">&#39;is_lm&#39;</span> not found</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_grid</span>(is_lm)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>Error <span class="cf">in</span> <span class="fu">plot_grid</span>(is_lm)<span class="sc">:</span> object <span class="st">&#39;is_lm&#39;</span> not found</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_counterfactual</span>(is_lm)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>Error <span class="cf">in</span> <span class="fu">plot_counterfactual</span>(is_lm)<span class="sc">:</span> object <span class="st">&#39;is_lm&#39;</span> not found</span></code></pre></div>
+<!-- ![](getspanel_plot.png) -->
+</div>
+<div id="saturation-methods" class="section level2">
+<h2>Saturation Methods</h2>
+<div id="impulse-indicator-saturation" class="section level3">
+<h3>Impulse Indicator Saturation</h3>
+<p>This argument works just as in the <strong>gets</strong> package. The
+method simply adds a <code>0</code> and <code>1</code> dummy for each
+observation.</p>
+<p>Simply set <code>iis = TRUE</code>.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>iis_example <span class="ot">&lt;-</span> <span class="fu">isatpanel</span>(<span class="at">data =</span> EUCO2residential,</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>                         <span class="at">formula =</span> lagg.directem_pc <span class="sc">~</span> lgdp,</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">index =</span> <span class="fu">c</span>(<span class="st">&quot;country&quot;</span>,<span class="st">&quot;year&quot;</span>),</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>                         <span class="at">effect =</span> <span class="st">&quot;twoways&quot;</span>,</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>                         <span class="at">iis =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>Error <span class="cf">in</span> <span class="fu">eval</span>(predvars, data, env)<span class="sc">:</span> object <span class="st">&#39;lagg.directem_pc&#39;</span> not found</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(iis_example)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>Error <span class="cf">in</span> <span class="fu">plot</span>(iis_example)<span class="sc">:</span> object <span class="st">&#39;iis_example&#39;</span> not found</span></code></pre></div>
+</div>
+<div id="step-indicator-saturation" class="section level3">
+<h3>Step Indicator Saturation</h3>
+<p>Traditional Step Indicator Saturation does not make sense in a panel
+setting. Therefore, the <strong>gets</strong> function of
+<code>sis</code> is disabled.</p>
+</div>
+<div id="joint-step-indicator-saturation" class="section level3">
+<h3>Joint Step Indicator Saturation</h3>
+<p>It is possible, however, to consider Step Indicator Saturation with
+common breaks across individuals. Such indicators would be collinear, if
+<code>effects = c(&quot;twoways&quot;)</code> or <code>effects = c(&quot;time&quot;)</code>
+i.e. if Time Fixed Effects are included.</p>
+<p>If, however, <code>effect = &quot;individual&quot;</code> then we can use
+<code>jsis = TRUE</code> to select over all individual time fixed
+effects.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>jsis_example <span class="ot">&lt;-</span> <span class="fu">isatpanel</span>(<span class="at">data =</span> EUCO2residential,</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>                          <span class="at">formula =</span> lagg.directem_pc <span class="sc">~</span> lgdp,</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>                          <span class="at">index =</span> <span class="fu">c</span>(<span class="st">&quot;country&quot;</span>,<span class="st">&quot;year&quot;</span>),</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>                          <span class="at">effect =</span> <span class="st">&quot;twoways&quot;</span>,</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>                          <span class="at">jsis =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>Error <span class="cf">in</span> <span class="fu">eval</span>(predvars, data, env)<span class="sc">:</span> object <span class="st">&#39;lagg.directem_pc&#39;</span> not found</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(jsis_example)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>Error <span class="cf">in</span> <span class="fu">plot</span>(jsis_example)<span class="sc">:</span> object <span class="st">&#39;jsis_example&#39;</span> not found</span></code></pre></div>
+</div>
+<div id="coefficient-step-indicator-saturation" class="section level3">
+<h3>Coefficient Step Indicator Saturation</h3>
+<p><strong>Note:</strong> This method has only been tested using the
+<code>lm</code> implementation (using <code>data</code>,
+<code>formula</code>, and <code>index</code>).</p>
+<p>This method allows detection of coefficient breaks that are common
+across all groups. It is the interaction between <code>jsis</code> and
+the relevant coefficient.</p>
+<p>To illustrate this, as well as the advantages of using the
+<code>lm</code> approach, we include a non-linear term of the
+lgdperature variable using <code>I(lgdp^2)</code>:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>csis_example <span class="ot">&lt;-</span> <span class="fu">isatpanel</span>(<span class="at">data =</span> EUCO2residential,</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>                          <span class="at">formula =</span> lagg.directem_pc <span class="sc">~</span> lgdp <span class="sc">+</span> <span class="fu">I</span>(lgdp<span class="sc">^</span><span class="dv">2</span>),</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>                          <span class="at">index =</span> <span class="fu">c</span>(<span class="st">&quot;country&quot;</span>,<span class="st">&quot;year&quot;</span>),</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>                          <span class="at">effect =</span> <span class="st">&quot;twoways&quot;</span>,</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>                          <span class="at">csis =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>Error <span class="cf">in</span> <span class="fu">eval</span>(predvars, data, env)<span class="sc">:</span> object <span class="st">&#39;lagg.directem_pc&#39;</span> not found</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(csis_example)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>Error <span class="cf">in</span> <span class="fu">plot</span>(csis_example)<span class="sc">:</span> object <span class="st">&#39;csis_example&#39;</span> not found</span></code></pre></div>
+<p>By default, all coefficients will be interacted and added to the
+indicator list - but his can be controlled using the
+<code>csis_var</code>, which takes a character vector of column names
+i.e. <code>csis_var = &quot;lgdp&quot;</code>.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>csis_example2 <span class="ot">&lt;-</span> <span class="fu">isatpanel</span>(<span class="at">data =</span> EUCO2residential,</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>                           <span class="at">formula =</span> lagg.directem_pc <span class="sc">~</span> lgdp <span class="sc">+</span> <span class="fu">I</span>(lgdp<span class="sc">^</span><span class="dv">2</span>),</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>                           <span class="at">index =</span> <span class="fu">c</span>(<span class="st">&quot;country&quot;</span>,<span class="st">&quot;year&quot;</span>),</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>                           <span class="at">effect =</span> <span class="st">&quot;twoways&quot;</span>,</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>                           <span class="at">csis =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>                           <span class="at">csis_var =</span> <span class="st">&quot;lgdp&quot;</span>)</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>Error <span class="cf">in</span> <span class="fu">eval</span>(predvars, data, env)<span class="sc">:</span> object <span class="st">&#39;lagg.directem_pc&#39;</span> not found</span></code></pre></div>
+</div>
+<div id="fixed-effect-step-indicator-saturation" class="section level3">
+<h3>Fixed Effect Step Indicator Saturation</h3>
+<p>This is equivalent to supplying a constant to the mxbreak argument in
+the old method. This essentially breaks the group-specific intercept
+i.e. the individual fixed effect.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>fesis_example <span class="ot">&lt;-</span> <span class="fu">isatpanel</span>(<span class="at">data =</span> EUCO2residential,</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>                           <span class="at">formula =</span> lagg.directem_pc <span class="sc">~</span> lgdp <span class="sc">+</span> <span class="fu">I</span>(lgdp<span class="sc">^</span><span class="dv">2</span>),</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>                           <span class="at">index =</span> <span class="fu">c</span>(<span class="st">&quot;country&quot;</span>,<span class="st">&quot;year&quot;</span>),</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>                           <span class="at">effect =</span> <span class="st">&quot;twoways&quot;</span>,</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>                           <span class="at">fesis =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>Error <span class="cf">in</span> <span class="fu">eval</span>(predvars, data, env)<span class="sc">:</span> object <span class="st">&#39;lagg.directem_pc&#39;</span> not found</span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fesis_example)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>Error <span class="cf">in</span> <span class="fu">plot</span>(fesis_example)<span class="sc">:</span> object <span class="st">&#39;fesis_example&#39;</span> not found</span></code></pre></div>
+<p>Similar to the <code>csis_var</code> idea, we can specify the
+<code>fesis</code> method for a subset of individuals as well using the
+<code>fesis_id</code> variable, which takes a character vector of
+individuals. In this case we can use
+e.g. <code>fesis_id = c(&quot;2&quot;,&quot;3&quot;)</code>.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>fesis_example2 <span class="ot">&lt;-</span> <span class="fu">isatpanel</span>(<span class="at">data =</span> EUCO2residential,</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>                           <span class="at">formula =</span> lagg.directem_pc <span class="sc">~</span> lgdp <span class="sc">+</span> <span class="fu">I</span>(lgdp<span class="sc">^</span><span class="dv">2</span>),</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>                           <span class="at">index =</span> <span class="fu">c</span>(<span class="st">&quot;country&quot;</span>,<span class="st">&quot;year&quot;</span>),</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>                           <span class="at">effect =</span> <span class="st">&quot;twoways&quot;</span>,</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>                           <span class="at">fesis =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>                           <span class="at">fesis_id =</span> <span class="fu">c</span>(<span class="st">&quot;2&quot;</span>,<span class="st">&quot;3&quot;</span>))</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>Error <span class="cf">in</span> <span class="fu">eval</span>(predvars, data, env)<span class="sc">:</span> object <span class="st">&#39;lagg.directem_pc&#39;</span> not found</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fesis_example2)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>Error <span class="cf">in</span> <span class="fu">plot</span>(fesis_example2)<span class="sc">:</span> object <span class="st">&#39;fesis_example2&#39;</span> not found</span></code></pre></div>
+</div>
+<div id="coefficient-fixed-effect-step-indicator-saturation" class="section level3">
+<h3>Coefficient Fixed Effect Step Indicator Saturation</h3>
+<p>This method combines the <code>csis</code> and the <code>fesis</code>
+approach and detects whether coefficients for individual units break
+over time.</p>
+<p>This means we can also combine the subsetting in both the variable
+and in the individual units using <code>cfesis_id</code> and
+<code>cfesis_var</code>.</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>cfesis_example <span class="ot">&lt;-</span> <span class="fu">isatpanel</span>(<span class="at">data =</span> EUCO2residential,</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>                            <span class="at">formula =</span> lagg.directem_pc <span class="sc">~</span> lgdp <span class="sc">+</span> <span class="fu">I</span>(lgdp<span class="sc">^</span><span class="dv">2</span>),</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>                            <span class="at">index =</span> <span class="fu">c</span>(<span class="st">&quot;country&quot;</span>,<span class="st">&quot;year&quot;</span>),</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>                            <span class="at">effect =</span> <span class="st">&quot;twoways&quot;</span>,</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>                            <span class="at">cfesis =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>                            <span class="at">cfesis_id =</span> <span class="fu">c</span>(<span class="st">&quot;2&quot;</span>,<span class="st">&quot;3&quot;</span>),</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>                            <span class="at">cfesis_var =</span> <span class="st">&quot;lgdp&quot;</span>)</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>Error <span class="cf">in</span> <span class="fu">eval</span>(predvars, data, env)<span class="sc">:</span> object <span class="st">&#39;lagg.directem_pc&#39;</span> not found</span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(cfesis_example)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>Error <span class="cf">in</span> <span class="fu">plot</span>(cfesis_example)<span class="sc">:</span> object <span class="st">&#39;cfesis_example&#39;</span> not found</span></code></pre></div>
+</div>
+</div>
+<div id="the-ar-argument" class="section level2">
+<h2>The <code>ar</code> argument</h2>
+<p>It is now possible to specify an argument to include autoregressive
+coefficients, using the <code>ar</code> argument.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>fesis_ar1_example <span class="ot">&lt;-</span> <span class="fu">isatpanel</span>(<span class="at">data =</span> EUCO2residential,</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>                               <span class="at">formula =</span> lagg.directem_pc <span class="sc">~</span> lgdp <span class="sc">+</span> <span class="fu">I</span>(lgdp<span class="sc">^</span><span class="dv">2</span>),</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>                               <span class="at">index =</span> <span class="fu">c</span>(<span class="st">&quot;country&quot;</span>,<span class="st">&quot;year&quot;</span>),</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>                               <span class="at">effect =</span> <span class="st">&quot;twoways&quot;</span>,</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>                               <span class="at">fesis =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>                               <span class="at">ar =</span> <span class="dv">1</span>)</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>Error <span class="cf">in</span> <span class="fu">eval</span>(predvars, data, env)<span class="sc">:</span> object <span class="st">&#39;lagg.directem_pc&#39;</span> not found</span></code></pre></div>
+</div>
+<div id="post-selection-robustness" class="section level2">
+<h2>Post-selection robustness</h2>
+<p>The options for the <code>robust.isatpanel</code> are to use HAC
+Standard Errors, use a standard White Standard Error Correction (with
+the option of clustering the S.E. within groups or time):</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">robust.isatpanel</span>(fesis_ar1_example, <span class="at">HAC =</span> <span class="cn">TRUE</span>, <span class="at">robust =</span> <span class="cn">TRUE</span>, <span class="at">cluster =</span> <span class="st">&quot;group&quot;</span>)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>Error <span class="cf">in</span> <span class="fu">robust.isatpanel</span>(fesis_ar1_example, <span class="at">HAC =</span> <span class="cn">TRUE</span>, <span class="at">robust =</span> <span class="cn">TRUE</span>, <span class="sc">:</span> object <span class="st">&#39;fesis_ar1_example&#39;</span> not found</span></code></pre></div>
+</div>
+<div id="the-engine-argument" class="section level2">
+<h2>The <code>engine</code> argument</h2>
+<p>Another new argument is also the <code>engine</code> argument. This
+allows us to use an external package to estimate our models. At this
+stage, the <strong>fixest</strong> package can be used.</p>
+<p>This also means that we can now use an argument to cluster Standard
+Errors using <code>cluster</code>.</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>fixest_example <span class="ot">&lt;-</span> <span class="fu">isatpanel</span>(<span class="at">data =</span> EUCO2residential,</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>                            <span class="at">formula =</span> lagg.directem_pc <span class="sc">~</span> lgdp,</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>                            <span class="at">index =</span> <span class="fu">c</span>(<span class="st">&quot;country&quot;</span>,<span class="st">&quot;year&quot;</span>),</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>                            <span class="at">effect =</span> <span class="st">&quot;twoways&quot;</span>,</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>                            <span class="at">fesis =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>                            <span class="at">engine =</span> <span class="st">&quot;fixest&quot;</span>,</span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>                            <span class="at">cluster =</span> <span class="st">&quot;none&quot;</span>)</span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>Error <span class="cf">in</span> <span class="fu">eval</span>(predvars, data, env)<span class="sc">:</span> object <span class="st">&#39;lagg.directem_pc&#39;</span> not found</span></code></pre></div>
+<p>We can verify that, using no clustering of Standard Errors at all,
+using the <strong>fixest</strong> package does not change our
+estimates:</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(fixest_example<span class="sc">$</span>isatpanel.result<span class="sc">$</span>mean.results)</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>Error <span class="cf">in</span> <span class="fu">head</span>(fixest_example<span class="sc">$</span>isatpanel.result<span class="sc">$</span>mean.results)<span class="sc">:</span> object <span class="st">&#39;fixest_example&#39;</span> not found</span></code></pre></div>
+<p>Compared to the default estimator:</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(is_lm<span class="sc">$</span>isatpanel.result<span class="sc">$</span>mean.results)</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>Error <span class="cf">in</span> <span class="fu">head</span>(is_lm<span class="sc">$</span>isatpanel.result<span class="sc">$</span>mean.results)<span class="sc">:</span> object <span class="st">&#39;is_lm&#39;</span> not found</span></code></pre></div>
+<p>However, changing the <code>cluster</code> specification of course
+does. <strong>The Standard Error correction with it’s current
+implementation is not valid, so allows for many more indicators than
+true - therefore clustering is therefore not recommended.</strong></p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>fixest_example_cluster <span class="ot">&lt;-</span> <span class="fu">isatpanel</span>(<span class="at">data =</span> EUCO2residential,</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">formula =</span> lagg.directem_pc <span class="sc">~</span> lgdp <span class="sc">+</span> <span class="fu">I</span>(lgdp<span class="sc">^</span><span class="dv">2</span>),</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">index =</span> <span class="fu">c</span>(<span class="st">&quot;country&quot;</span>,<span class="st">&quot;year&quot;</span>),</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">effect =</span> <span class="st">&quot;twoways&quot;</span>,</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">fesis =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">engine =</span> <span class="st">&quot;fixest&quot;</span>,</span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">cluster =</span> <span class="st">&quot;individual&quot;</span>)</span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>Error <span class="cf">in</span> <span class="fu">eval</span>(predvars, data, env)<span class="sc">:</span> object <span class="st">&#39;lagg.directem_pc&#39;</span> not found</span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fixest_example_cluster)</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>Error <span class="cf">in</span> <span class="fu">plot</span>(fixest_example_cluster)<span class="sc">:</span> object <span class="st">&#39;fixest_example_cluster&#39;</span> not found</span></code></pre></div>
+</div>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
