@@ -1,7 +1,7 @@
 Package: getspanel
 Title: General-to-Specific Modelling of Panel Data
-Version: 0.1.4
-Date: 2023-05-03
+Version: 0.1.5
+Date: 2023-10-18
 Authors@R: 
     c(
     person(given = "Felix",
@@ -22,15 +22,15 @@ BugReports: https://github.com/moritzpschwarz/getspanel/issues
 LazyData: true
 RoxygenNote: 7.2.3
 Suggests: testthat, knitr, rmarkdown, lfe, prettydoc, plm, fixest,
-        lmtest, sandwich
+        lmtest, sandwich, cowplot
 Imports: gets, fastDummies, Matrix, ggplot2, stats, mvtnorm
 Depends: R (>= 3.5.0)
 VignetteBuilder: knitr, rmarkdown
 Config/testthat/edition: 3
 NeedsCompilation: no
-Packaged: 2023-05-03 20:27:58 UTC; morit
+Packaged: 2023-10-19 10:59:26 UTC; morit
 Author: Felix Pretis [aut],
   Moritz Schwarz [aut, cre] (<https://orcid.org/0000-0003-0340-3780>)
 Maintainer: Moritz Schwarz <moritz.schwarz@scmo.eu>
 Repository: CRAN
-Date/Publication: 2023-05-05 08:50:02 UTC
+Date/Publication: 2023-10-19 11:30:03 UTC

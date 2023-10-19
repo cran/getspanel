@@ -10,7 +10,7 @@ knitr::opts_chunk$set(
   fig.width = 7,
   fig.height = 5,
   dev = "png",
-  dpi = 600
+  dpi = 300
 )
 
 ## ---- eval=FALSE--------------------------------------------------------------
@@ -18,6 +18,7 @@ knitr::opts_chunk$set(
 
 ## ----setup--------------------------------------------------------------------
 library(getspanel)
+library(fixest)
 
 ## -----------------------------------------------------------------------------
 data("EUCO2residential")
@@ -86,19 +87,14 @@ jsis_example <- isatpanel(data = EUCO2residential,
                           jsis = TRUE)
 
 ## -----------------------------------------------------------------------------
-plot(jsis_example)
-
-## -----------------------------------------------------------------------------
 csis_example <- isatpanel(data = EUCO2residential,
                           formula = lagg.directem_pc ~ lgdp + I(lgdp^2) + pop,
                           index = c("country","year"),
 
                           effect = "twoways",
+                          t.pval = 0.05,
 
                           csis = TRUE)
-
-## -----------------------------------------------------------------------------
-plot(csis_example)
 
 ## -----------------------------------------------------------------------------
 csis_example2 <- isatpanel(data = EUCO2residential,
@@ -137,6 +133,9 @@ fesis_example2 <- isatpanel(data = EUCO2residential,
 plot(fesis_example2)
 
 ## -----------------------------------------------------------------------------
+robust_isatpanel(fesis_example, HAC = TRUE, robust = TRUE, cluster = "group")
+
+## -----------------------------------------------------------------------------
 cfesis_example <- isatpanel(data = EUCO2residential,
                             formula = lagg.directem_pc ~ lgdp + I(lgdp^2) + pop,
                             index = c("country","year"),
@@ -162,39 +161,36 @@ fesis_ar1_example <- isatpanel(data = EUCO2residential,
 
                                ar = 1)
 
-## -----------------------------------------------------------------------------
-robust_isatpanel(fesis_ar1_example, HAC = TRUE, robust = TRUE, cluster = "group")
+## ----eval = FALSE-------------------------------------------------------------
+#  fixest_example <- isatpanel(data = EUCO2residential,
+#                              formula = lagg.directem_pc ~ lgdp + I(lgdp^2) + pop,
+#                              index = c("country","year"),
+#  
+#                              effect = "twoways",
+#  
+#                              fesis = TRUE,
+#  
+#                              engine = "fixest",
+#                              cluster = "none")
 
-## -----------------------------------------------------------------------------
-fixest_example <- isatpanel(data = EUCO2residential,
-                            formula = lagg.directem_pc ~ lgdp + I(lgdp^2) + pop,
-                            index = c("country","year"),
+## ---- eval = FALSE------------------------------------------------------------
+#  head(fixest_example$isatpanel.result$mean.results)
 
-                            effect = "twoways",
+## ---- eval = FALSE------------------------------------------------------------
+#  head(is_lm$isatpanel.result$mean.results)
 
-                            fesis = TRUE,
+## ---- eval = FALSE------------------------------------------------------------
+#  fixest_example_cluster <- isatpanel(data = EUCO2residential,
+#                                      formula = lagg.directem_pc ~ lgdp + I(lgdp^2) + pop,
+#                                      index = c("country","year"),
+#  
+#                                      effect = "twoways",
+#  
+#                                      fesis = TRUE,
+#  
+#                                      engine = "fixest",
+#                                      cluster = "individual")
 
-                            engine = "fixest",
-                            cluster = "none")
-
-## -----------------------------------------------------------------------------
-head(fixest_example$isatpanel.result$mean.results)
-
-## -----------------------------------------------------------------------------
-head(is_lm$isatpanel.result$mean.results)
-
-## -----------------------------------------------------------------------------
-fixest_example_cluster <- isatpanel(data = EUCO2residential,
-                                    formula = lagg.directem_pc ~ lgdp + I(lgdp^2) + pop,
-                                    index = c("country","year"),
-
-                                    effect = "twoways",
-
-                                    fesis = TRUE,
-
-                                    engine = "fixest",
-                                    cluster = "individual")
-
-## -----------------------------------------------------------------------------
-plot(fixest_example_cluster)
+## ---- eval = FALSE------------------------------------------------------------
+#  plot(fixest_example_cluster)
 
