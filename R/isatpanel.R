@@ -133,7 +133,7 @@ isatpanel <- function(
     mxreg=NULL,
     ...
 ){
-  requireNamespace("gets")
+  requireNamespace("gets", quietly = TRUE)
 
   # Error checks -----
   if (!effect %in% c("twoways", "individual", "time","none")) {stop("Error in Fixed Effect Specification (effect). Possible values for effect are: 'twoways', 'individual', 'time', or 'none'.")}
@@ -210,6 +210,8 @@ isatpanel <- function(
   #                          id_used = gsub(" ","",id))
   id <- gsub(" ","",id)
 
+  # Check if id has only one unique value
+  if(length(unique(id)) == 1){stop("Only one unique value in the id variable. This approach needs panel data i.e. more than one unit. Please check the data.")}
 
   mxnames <- colnames(mxreg)
   if (!is.null(mxreg)) {
@@ -325,11 +327,10 @@ isatpanel <- function(
   df_base <- df
 
   # Break Methods ------------
-
   BreakList <- list()
   ## jsis = TRUE --------
   if (jsis) {
-    jsis_df <- as.data.frame(cbind(time = unique(time),gets::sim(Tsample)))
+    jsis_df <- cbind(data.frame(time = unique(time)),gets::sim(Tsample))
 
     # merge with df to ensure order is correct
     current <- merge(df,jsis_df, by = "time", all.x = TRUE, sort = FALSE)
@@ -348,7 +349,7 @@ isatpanel <- function(
 
   #jiis = TRUE - This is just like a time FE
   if (jiis) {
-    jiis_df <- as.data.frame(cbind(time = unique(time),gets::iim(Tsample)))
+    jiis_df <- cbind(data.frame(time = unique(time)),gets::iim(Tsample))
 
     # merge with df to ensure order is correct
     current <- merge(df,jiis_df, by = "time", all.x = TRUE, sort = FALSE)
@@ -421,7 +422,7 @@ isatpanel <- function(
 
   ## csis = TRUE --------------
   if (csis) {
-    csis_init <- cbind(time = unique(time),gets::sim(Tsample))
+    csis_init <- cbind(data.frame(time = unique(time)),gets::sim(Tsample))
     names(csis_init) <- c("time",paste0("csis",unique(time)[-1]))
     csis_init <- merge(df_base,csis_init,by = "time",sort = FALSE)
     csis_df <- csis_init[,c("id","time")]
@@ -679,16 +680,10 @@ isatpanel <- function(
   on.exit(options(tmpmc)) # set the old mc warning on exit
 
   options(mc.warning = FALSE)
-  #sis <- FALSE # don't allow sis argument - does not make sense in a panel context, only JSIS makes sense
+  # don't allow sis argument - does not make sense in a panel context, only JSIS makes sense
   ispan <- gets::isat(y, mxreg = mx, iis = iis, sis = FALSE, uis = sispanx, user.estimator = user.estimator, mc = FALSE, t.pval = t.pval,
                       print.searchinfo = print.searchinfo, ...)
-  #ispan <- isat.short(y, mxreg = mx, iis=iis, sis=FALSE, uis=sispanx, user.estimator = user.estimator, mc=FALSE, ...)
-
-
   # Return output ------------
-
-
-
   out$isatpanel.result <- ispan
 
   # Create a final data object
@@ -701,7 +696,7 @@ isatpanel <- function(
 
   out$indicator_matrix <- sispanx
 
-  out$finaldata <- data.frame(estimateddata, indicators)
+  out$finaldata <- cbind(estimateddata, indicators)
 
   out$arguments <- list()
   out$arguments$index <- index
@@ -715,14 +710,18 @@ isatpanel <- function(
   #out$arguments <- mget(names(formals()),sys.frame(sys.nframe()))
   class(out) <- "isatpanel"
 
+  out$retained.indicators <- get_indicators(out)
+
   if (plot == TRUE) {
-    if(identical(list(),get_indicators(out))){
-      print(plot(out, zero_line = FALSE))
-    } else {
-      print(cowplot::plot_grid(plot(out, zero_line = FALSE),
-                               plot_grid(out),
-                               nrow = 2))
-    }
+    try(
+      if(identical(list(),get_indicators(out))){
+        print(plot(out, zero_line = FALSE))
+      } else {
+        print(cowplot::plot_grid(plot(out, zero_line = FALSE),
+                                 plot_grid(out),
+                                 nrow = 2))
+      }
+    )
   }
 
 

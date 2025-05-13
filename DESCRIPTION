@@ -1,7 +1,7 @@
 Package: getspanel
 Title: General-to-Specific Modelling of Panel Data
-Version: 0.2.0
-Date: 2024-03-19
+Version: 0.2.1
+Date: 2025-05-12
 Authors@R: 
     c(
     person(given = "Felix",
@@ -17,10 +17,10 @@ Description: Uses several types of indicator saturation and automated General-to
 License: MIT + file LICENSE
 Encoding: UTF-8
 URL: https://github.com/moritzpschwarz/getspanel,
-        http://moritzschwarz.org/getspanel/
+        https://www.moritzschwarz.org/getspanel/
 BugReports: https://github.com/moritzpschwarz/getspanel/issues
 LazyData: true
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.2
 Suggests: testthat, knitr, rmarkdown, lfe, prettydoc, plm, fixest,
         lmtest, sandwich, cowplot
 Imports: gets, fastDummies, Matrix, ggplot2, stats, mvtnorm
@@ -28,9 +28,10 @@ Depends: R (>= 3.5.0)
 VignetteBuilder: knitr, rmarkdown
 Config/testthat/edition: 3
 NeedsCompilation: no
-Packaged: 2024-03-19 16:51:17 UTC; morit
+Packaged: 2025-05-13 07:41:45 UTC; morit
 Author: Felix Pretis [aut],
-  Moritz Schwarz [aut, cre] (<https://orcid.org/0000-0003-0340-3780>)
+  Moritz Schwarz [aut, cre] (ORCID:
+    <https://orcid.org/0000-0003-0340-3780>)
 Maintainer: Moritz Schwarz <moritz.schwarz@scmo.eu>
 Repository: CRAN
-Date/Publication: 2024-03-19 17:20:02 UTC
+Date/Publication: 2025-05-13 08:00:02 UTC
