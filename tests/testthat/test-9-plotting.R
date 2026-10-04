@@ -154,6 +154,9 @@ test_that("Residuals Plot",{
 
 test_that("plotting functions work with regex_exclude_indicators", {
 
+  skip_on_ci()
+  skip_on_cran()
+
   expect_silent(plot_grid(outcome4, regex_exclude_indicators = "cfesisC"))
   expect_silent(plot_grid(outcome4, regex_exclude_indicators = NULL))
 
@@ -162,5 +165,105 @@ test_that("plotting functions work with regex_exclude_indicators", {
 
   expect_snapshot_plot("plot_grid_outcome4_regex", code = plot_grid(outcome4, regex_exclude_indicators = "cfesisC"))
   expect_snapshot_plot("plot_counterfactual_outcome2_regex", code = plot_counterfactual(outcome2, regex_exclude_indicators = "fesisA"))
+})
+
+test_that("plotting cfesis", {
+
+  skip_on_ci()
+  skip_on_cran()
+
+  # Prepare Data
+  set.seed(1230)
+  data("EU_emissions_road")
+  data <- EU_emissions_road
+  data$lgdp_sq <- data$lgdp^2
+
+  data$transport.emissions_pc <- data$transport.emissions/data$pop
+  data$ltransport.emissions_pc <- log(data$transport.emissions_pc)
+
+  data$L1.ltransport.emissions_pc <- NA
+  # For each country, shift the values of 'ltransport.emissions_pc' by one position
+  for (i in unique(data$country)) {
+    # Extract the 'ltransport.emissions_pc' values for the current country
+    current_country_values <- data$ltransport.emissions_pc[data$country == i]
+
+    # Shift the values by one position and insert an NA value at the beginning
+    shifted_values <- c(NA, current_country_values[-length(current_country_values)])
+
+    # Assign the shifted values to the corresponding rows in 'L1.ltransport.emissions_pc'
+    data$L1.ltransport.emissions_pc[data$country == i] <- shifted_values
+  }
+
+  # Group specification
+  EU15 <- c("Austria", "Belgium", "Germany", "Denmark", "Spain", "Finland",
+            "France", "United Kingdom", "Ireland", "Italy", "Luxembourg",
+            "Netherlands", "Greece", "Portugal", "Sweden")
+
+  # Prepare sample and data
+  sample <- EU15
+  dat <- data[data$country %in% sample & data$year >= 1995, ]
+
+  # Run
+  result <- isatpanel(
+    data = dat,
+    formula = ltransport.emissions_pc ~ lgdp + lgdp_sq + lpop,
+    index = c("country", "year"),
+    effect = "twoways",
+    iis = TRUE,
+    fesis = TRUE,
+    tis = TRUE,
+    csis = TRUE,
+    cfesis = TRUE,
+    t.pval = .05,
+    print.searchinfo = FALSE,
+    plot = FALSE,
+  )
+
+  expect_snapshot_plot("plot_grid_cfesis_1", code = plot_grid(result))
+  expect_snapshot_plot("plot_grid_cfesis_2", code = plot_grid(result, regex_exclude_indicators = "fesisFinland.2000|Austria|Greece"))
+  expect_snapshot_plot("plot_grid_cfesis_3", code = plot_grid(result, regex_exclude_indicators = "fesisFinland.2000|Austria|Greece|Luxembourg|lgdp.csis|lgdp_sq|iis1"))
+  expect_snapshot_plot("plot_grid_cfesis_4", code = plot_grid(result, regex_exclude_indicators = "tis|iis|^fesis|lgdp.cfesisFinland.2000"))
+  expect_snapshot_plot("plot_grid_cfesis_5", code = plot_grid(result, regex_exclude_indicators = "tis|iis|^fesis|csis|lgdp.cfesisFinland.2000"))
+  expect_snapshot_plot("plot_grid_cfesis_6", code = plot_grid(result, regex_exclude_indicators = "tis|iis|^fesis|csis|lgdp.cfesisFinland.2000|lpop"))
+  expect_snapshot_plot("plot_grid_cfesis_7", code = plot_grid(result, regex_exclude_indicators = "tis|iis|^fesis|csis|Finland|lpop|Greece"))
+  expect_snapshot_plot("plot_grid_cfesis_8", code = plot_grid(result, regex_exclude_indicators = "tis|iis|^fesis|csis|Finland|lpop|Greece|lgdp\\."))
+
+})
+
+test_that("ggplot checks without snapshotting the plot", {
+
+  p_grid <- plot_grid(outcome4, regex_exclude_indicators = "cfesisC")
+
+  # First check that you really have a plot
+  expect_s3_class(p_grid, "gg")
+
+  # Retrieve the underlying list
+  p_grid <- as.list(p_grid)
+
+  # Remove the "environment" element which is not predictible
+  p_grid$plot_env <- NULL
+
+  expect_true(all(is.na(p_grid$data[p_grid$data$id == "C", "effect"])))
+
+  # check the stability of the underlying list
+  expect_snapshot(p_grid)
+
+
+  p_counter <- plot_counterfactual(outcome2, regex_exclude_indicators = "cfesisC")
+
+  # First check that you really have a plot
+  expect_s3_class(p_counter, "gg")
+
+  # Retrieve the underlying list
+  p_counter <- as.list(p_counter)
+
+  # Remove the "environment" element which is not predictible
+  p_counter$plot_env <- NULL
+
+  expect_true(all(is.na(p_counter$data[p_counter$data$id == "C", "effect"])))
+
+  # check the stability of the underlying list
+  expect_snapshot(p_counter)
+
 })
 

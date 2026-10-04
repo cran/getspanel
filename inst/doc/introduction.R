@@ -1,4 +1,4 @@
-## ---- include = FALSE---------------------------------------------------------
+## ----include = FALSE----------------------------------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = NA,
@@ -13,8 +13,8 @@ knitr::opts_chunk$set(
   dpi = 300
 )
 
-## ---- eval=FALSE--------------------------------------------------------------
-#  install.packages("getspanel")
+## ----eval=FALSE---------------------------------------------------------------
+# install.packages("getspanel")
 
 ## ----setup--------------------------------------------------------------------
 library(getspanel)
@@ -162,35 +162,35 @@ fesis_ar1_example <- isatpanel(data = EUCO2residential,
                                ar = 1)
 
 ## ----eval = FALSE-------------------------------------------------------------
-#  fixest_example <- isatpanel(data = EUCO2residential,
-#                              formula = lagg.directem_pc ~ lgdp + I(lgdp^2) + pop,
-#                              index = c("country","year"),
-#  
-#                              effect = "twoways",
-#  
-#                              fesis = TRUE,
-#  
-#                              engine = "fixest",
-#                              cluster = "none")
+# fixest_example <- isatpanel(data = EUCO2residential,
+#                             formula = lagg.directem_pc ~ lgdp + I(lgdp^2) + pop,
+#                             index = c("country","year"),
+# 
+#                             effect = "twoways",
+# 
+#                             fesis = TRUE,
+# 
+#                             engine = "fixest",
+#                             cluster = "none")
 
-## ---- eval = FALSE------------------------------------------------------------
-#  head(fixest_example$isatpanel.result$mean.results)
+## ----eval = FALSE-------------------------------------------------------------
+# head(fixest_example$isatpanel.result$mean.results)
 
-## ---- eval = FALSE------------------------------------------------------------
-#  head(is_lm$isatpanel.result$mean.results)
+## ----eval = FALSE-------------------------------------------------------------
+# head(is_lm$isatpanel.result$mean.results)
 
-## ---- eval = FALSE------------------------------------------------------------
-#  fixest_example_cluster <- isatpanel(data = EUCO2residential,
-#                                      formula = lagg.directem_pc ~ lgdp + I(lgdp^2) + pop,
-#                                      index = c("country","year"),
-#  
-#                                      effect = "twoways",
-#  
-#                                      fesis = TRUE,
-#  
-#                                      engine = "fixest",
-#                                      cluster = "individual")
+## ----eval = FALSE-------------------------------------------------------------
+# fixest_example_cluster <- isatpanel(data = EUCO2residential,
+#                                     formula = lagg.directem_pc ~ lgdp + I(lgdp^2) + pop,
+#                                     index = c("country","year"),
+# 
+#                                     effect = "twoways",
+# 
+#                                     fesis = TRUE,
+# 
+#                                     engine = "fixest",
+#                                     cluster = "individual")
 
-## ---- eval = FALSE------------------------------------------------------------
-#  plot(fixest_example_cluster)
+## ----eval = FALSE-------------------------------------------------------------
+# plot(fixest_example_cluster)
 
